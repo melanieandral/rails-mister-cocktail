@@ -5,32 +5,26 @@ class CocktailsController < ApplicationController
 
   def show
     @cocktail = Cocktail.find(params[:id])
-    @doses = @cocktail.doses
     @dose = Dose.new
+    @review = Review.new
   end
 
   def new
-    @cocktails = Cocktail.new # needed to instantiate the form_for
+    @cocktail = Cocktail.new
   end
 
   def create
     @cocktail = Cocktail.new(cocktail_params)
     if @cocktail.save
-      redirect_to @cocktail, notice: 'Cocktail was successfully created.'
+      redirect_to cocktail_path(@cocktail)
     else
-      render :new
+      render 'new'
     end
-
   end
 
-private
+  private
 
-def set_cocktail
-  @cocktail = Cocktail.find(params[:id])
-end
-
-def cocktail_params
-  params.require(:cocktail).permit(:name)
-end
-
+  def cocktail_params
+    params.require(:cocktail).permit(:name)
+  end
 end
