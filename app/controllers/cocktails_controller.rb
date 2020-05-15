@@ -5,10 +5,12 @@ class CocktailsController < ApplicationController
 
   def show
     @cocktail = Cocktail.find(params[:id])
+    @doses = @cocktail.doses
+    @dose = Dose.new
   end
 
   def new
-    @cocktails = Cocktail.new
+    @cocktails = Cocktail.new # needed to instantiate the form_for
   end
 
   def create
